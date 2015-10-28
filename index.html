@@ -47,6 +47,56 @@
     <div id="main">
       
   
+    <article id="post-一个简单的双击事件处理" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/2015/10/28/一个简单的双击事件处理/" class="article-date">
+  <time datetime="2015-10-28T08:48:20.000Z" itemprop="datePublished">2015-10-28</time>
+</a>
+		</span>
+		<span class="meta-elements author">Crosswall</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/2015/10/28/一个简单的双击事件处理/">简单的双击和长按处理</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>简单的双击和长按处理</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GestureDetector.SimpleOnGestureListener listener = new GestureDetector.SimpleOnGestureListener() &#123;&#10;        @Override&#10;        public boolean onDoubleTap(MotionEvent e) &#123;&#10;            //&#22788;&#29702;&#20320;&#30340;&#21452;&#20987;&#20107;&#20214;&#10;&#10;            return true;&#10;        &#125;&#10;&#10;        @Override&#10;        public void onLongPress(MotionEvent e) &#123;&#10;        &#9; //&#22788;&#29702;&#20320;&#30340;&#38271;&#25353;&#20107;&#20214;&#10;        &#125;&#10;    &#125;;&#10;    &#10;GestureDetector mGestureDetector = new GestureDetector(listener);&#10;    &#10;view.setOnTouchListener(new View.OnTouchListener() &#123;&#10;            @Override&#10;            public boolean onTouch(View view, MotionEvent motionEvent) &#123;&#10;                return mGestureDetector.onTouchEvent(motionEvent);&#10;            &#125;&#10;        &#125;);</span><br></pre></td></tr></table></figure>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tip/">tip</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小功能/">小功能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动开发/">移动开发</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
     <article id="post-社交产品的基本素养" class="post">
 	<footer class="entry-meta-header">
 		<span class="meta-elements date">
@@ -71,7 +121,7 @@
 	</header>
 	<div class="entry-content">
 		
-    	
+    	<h6 id="#本文仅代表个人的观点">#本文仅代表个人的观点</h6>
     
 	</div>
 	<footer class="entry-footer">
