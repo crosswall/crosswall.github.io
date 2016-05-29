@@ -72,8 +72,8 @@
 	<div class="entry-content">
 		
     	<h3 id="前言">前言</h3><p>目前我司项目的ViewHolder指定的ItemView都是一个customView，这类型View中可能有各种各样child view的点击事件需要实现，同时这些事件是和网络进行交互的，我司产品目前使用的是MVP的方案，review code的时候发现队友在customView中用new的方式创建了presenter实例，且队友把用户行为的统计代码也写在了里面，当时是很无语的，所以决定改造一番。</p>
-<p>这张图中的itemView有分享和点赞的按钮，但是每个开发者对这类型的itemView的处理方式都不一样</p>
-<p><img src="http://7xj04v.com1.z0.glb.clouddn.com/1.pic.jpg?imageView/2/w/480/h/800/q/100" alt="crosswall"></p>
+<p>这张图中的itemView有分享和点赞的按钮，不同的开发者对这类型的itemView的处理方式可能都不一样</p>
+<p><img src="http://7xj04v.com1.z0.glb.clouddn.com/1.pic.jpg?imageView/2/w/200/h/500/q/100" alt="crosswall"></p>
 <h4 id="下面是一段原始的createHolder的过程">下面是一段原始的createHolder的过程</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public DemoHolder onCreateViewHolder&#123;&#10;&#9;View view = LayoutInflate.from(context).inflate(layout,parents,attachToRoot);&#10;&#9;return new DemoHolder(view);&#10;&#125;&#10;&#10;class DemoHolder extends RecyclerView.ViewHodler&#123;&#10;&#9;public DemoHolder(View itemView)&#123;&#10;&#9;&#9;super(itemView)&#10;&#9;&#9;initView();&#10;&#9;&#125;&#10;&#9;&#10;&#9;void initView()&#123;&#10;&#9;  //findViewById...&#10;&#9;&#125;&#10;&#9;void setData(Object... object)&#123;&#10;&#9;&#9;//bindingData...&#10;&#9;&#9;//setOnClickListener...&#10;&#9;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
 <p>上述这种实现可能是一种常态，但是也产生了一些问题：</p>
 <blockquote>
