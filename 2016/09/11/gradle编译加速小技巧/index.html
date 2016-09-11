@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="穿墙的云"/>
+        <meta property="og:title" content="gradle编译加速小技巧"/>
     
 
     <!--Open Graph Description-->
@@ -33,7 +33,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -46,7 +46,7 @@
 
     <!-- Title -->
     
-    <title>page - 归档 - 穿墙的云</title>
+    <title>gradle编译加速小技巧 - 穿墙的云</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" type="text/css">
@@ -147,78 +147,85 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>归档</h1>
+                <div class="post-heading">
+                    <h1>gradle编译加速小技巧</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-09-11
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/gradle/">#gradle</a> <a href="/tags/加速/">#加速</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2015/05/09/一代人/">
-        <h1 class="post-title archive">
-            一代人
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2015-05-09
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-                <div class="post-preview">
-    <a href="/2015/04/13/重新出发/">
-        <h1 class="post-title archive">
-            重新出发
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2015-04-13
-    </p>
-</div>
-            
-                <div class="post-preview">
-    <a href="/2014/04/13/hello-world/">
-        <h1 class="post-title archive">
-            Hello World
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2014-04-13
-    </p>
-</div>
-            
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-        <li class="previous"><a href="/archives/">&larr;  下一頁</a></li>
-    
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>项目越变越大的时候，我们需要认真的优化编译速度，提高效率</p>
+<p>指定某个module进行编译<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew :share_module:build</span><br></pre></td></tr></table></figure></p>
+<p>一个项目可能会依赖多个module，这些module有以下几个特点</p>
+<blockquote>
+<ul>
+<li>通常会作为工具库,或者某个具体业务</li>
+<li>有自己的结构，使用可能很高频</li>
+<li>有时需要针对某个module做修改</li>
 </ul>
+</blockquote>
+<p>如果你对instant-run不怎么感到爽可以像这样去管理你的编译<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*&#10; * &#22312;&#39033;&#30446;&#26681;&#30446;&#24405;&#21019;&#24314;&#25991;&#20214;moduleList&#10; * &#21521;&#35813;&#25991;&#20214;&#20013;&#20889;&#20837;&#20320;&#30340;module&#65292;&#20363;&#22914;&#65306;&#10; * :share_lib&#10; * :push_lib&#10; * :more...&#10; */&#10;def moduleList = new File(getRootDir(),&#34;mouldeList&#34;)&#10;&#10;//&#25318;&#25130;task&#65292;&#35774;&#32622;&#36339;&#36807;moudle&#32534;&#35793;&#10;tasks.whenTaskAdded &#123; task -&#62;&#10;    for (int i = 0; i &#60; taskList.size(); i++) &#123;&#10;        if (task.name.startsWith(taskList.get(i))) &#123;&#10;            task.enabled = false;&#10;        &#125;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样在debug编译时，只会对:app这个module进行编译，速度上会有一定的提升。</p>
+<p>使用增量的模式进行更新<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*&#10; * app&#30446;&#24405;&#19979;&#30340;build&#37197;&#32622;&#20013;&#21487;&#20197;&#23545;dex&#36827;&#34892;&#37197;&#32622;&#10; * &#36825;&#20010;&#26041;&#26696;&#26159;&#22686;&#37327;&#26356;&#26032;&#65292;&#20855;&#20307;&#24182;&#27809;&#26377;&#28145;&#20837;&#20102;&#35299;&#10; */&#10; dexOptions &#123;&#10;    incremental true&#10; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>其他关于gradle的加速编译用Google或者别的搜索引擎都能搜索出来吧，大部分是对编译时内存的要求，也是对硬件本身的要求吧</p>
+<p>如果有人看到了这篇短文，且真的对你的编译速度有帮助，也请扩展开来，帮助更多需要帮助的开发者。</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
-
+</article>
 
     <!-- Footer -->
     <hr />
